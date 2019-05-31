@@ -57,7 +57,6 @@ func (daemon *Daemon) containerCreate(opts createOpts) (containertypes.Container
 	if opts.params.Config == nil {
 		return containertypes.ContainerCreateCreatedBody{}, errdefs.InvalidParameter(errors.New("Config cannot be empty in order to create a container"))
 	}
-
 	os := runtime.GOOS
 	if opts.params.Config.Image != "" {
 		img, err := daemon.imageService.GetImage(opts.params.Config.Image)
@@ -111,7 +110,6 @@ func (daemon *Daemon) create(opts createOpts) (retC *container.Container, retErr
 		imgID     image.ID
 		err       error
 	)
-
 	os := runtime.GOOS
 	if opts.params.Config.Image != "" {
 		img, err = daemon.imageService.GetImage(opts.params.Config.Image)
@@ -151,6 +149,10 @@ func (daemon *Daemon) create(opts createOpts) (retC *container.Container, retErr
 
 	if err := daemon.mergeAndVerifyLogConfig(&opts.params.HostConfig.LogConfig); err != nil {
 		return nil, errdefs.InvalidParameter(err)
+	}
+
+	if daemon.configStore.Capabilities != nil && opts.params.HostConfig.Capabilities == nil {
+		opts.params.HostConfig.Capabilities = daemon.configStore.Capabilities
 	}
 
 	if container, err = daemon.newContainer(opts.params.Name, os, opts.params.Config, opts.params.HostConfig, imgID, opts.managed); err != nil {

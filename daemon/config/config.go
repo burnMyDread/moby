@@ -120,6 +120,7 @@ type CommonConfig struct {
 	DNS                   []string                  `json:"dns,omitempty"`
 	DNSOptions            []string                  `json:"dns-opts,omitempty"`
 	DNSSearch             []string                  `json:"dns-search,omitempty"`
+	Capabilities          []string                  `json:"capabilities,omitempty"`
 	ExecOptions           []string                  `json:"exec-opts,omitempty"`
 	GraphDriver           string                    `json:"storage-driver,omitempty"`
 	GraphOptions          []string                  `json:"storage-opts,omitempty"`
