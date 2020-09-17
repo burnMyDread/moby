@@ -703,6 +703,13 @@ definitions:
             description: "A list of kernel capabilities to drop from the container. Conflicts with option 'Capabilities'"
             items:
               type: "string"
+          Capabilities:
+            type: "array"
+            description: |
+              A list of kernel capabilities to add by default. Conflicts
+              with option 'CapDrop' and 'CapAdd'.
+            items:
+              type: "string"
           CgroupnsMode:
             type: "string"
             enum:
